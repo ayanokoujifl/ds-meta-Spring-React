@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ayanokouji.dsmeta.dto.SaleDTO;
 import com.ayanokouji.dsmeta.entities.Sale;
 import com.ayanokouji.dsmeta.services.SaleService;
+import com.ayanokouji.dsmeta.services.SmsService;
 
 @RestController
 @RequestMapping(value = "/sales")
@@ -20,6 +21,9 @@ public class SaleController {
 	@Autowired
 	private SaleService service;
 
+	@Autowired
+	private SmsService smsService;
+	
 	@GetMapping
 	public Page<Sale> findAll(@RequestParam(value = "minDate", defaultValue = "") String minDate,
 			@RequestParam(value = "maxDate", defaultValue = "") String maxDate, Pageable pageable) {
@@ -29,5 +33,10 @@ public class SaleController {
 	@GetMapping(value = "/{id}")
 	public SaleDTO findById(@PathVariable Long id) {
 		return new SaleDTO(service.findById(id));
+	}
+	
+	@GetMapping(value = "/{id}/notification")
+	public void notifySms(@PathVariable Long id) {
+		smsService.sendSms(id);
 	}
 }
