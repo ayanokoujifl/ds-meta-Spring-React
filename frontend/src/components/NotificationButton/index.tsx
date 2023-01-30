@@ -9,8 +9,8 @@ type Props = {
   saleId: number
 }
 
-function handleClick(saleId: number) {
-  axios(`${BASE_URL}/sales/${saleId}/notification`).then(() =>
+async function handleClick(saleId: number) {
+  await axios(`${BASE_URL}/sales/${saleId}/notification`).then(() =>
     toast.info('SMS enviado com sucesso!')
   )
 }
