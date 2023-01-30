@@ -23,7 +23,7 @@ public class SaleController {
 
 	@Autowired
 	private SmsService smsService;
-	
+
 	@GetMapping
 	public Page<Sale> findAll(@RequestParam(value = "minDate", defaultValue = "") String minDate,
 			@RequestParam(value = "maxDate", defaultValue = "") String maxDate, Pageable pageable) {
@@ -34,7 +34,7 @@ public class SaleController {
 	public SaleDTO findById(@PathVariable Long id) {
 		return new SaleDTO(service.findById(id));
 	}
-	
+
 	@GetMapping(value = "/{id}/notification")
 	public void notifySms(@PathVariable Long id) {
 		smsService.sendSms(id);
